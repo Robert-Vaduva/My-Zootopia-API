@@ -62,7 +62,10 @@ def main():
     name = str(input("Enter a name of an animal: "))
     response = requests.get(API_URL + name, headers={'X-Api-Key': f'{API_KEY}'})
     if response.status_code == RESPONSE_OK:
-        animal_data = get_and_format_animal_data(response.json())
+        if response.json():
+            animal_data = get_and_format_animal_data(response.json())
+        else:
+            animal_data = f"<h2>The animal \"{name}\" doesn't exist.</h2>"
         template = get_html_template()
         page = template.replace(KEY_WORDS, animal_data)
         generate_html(page)
