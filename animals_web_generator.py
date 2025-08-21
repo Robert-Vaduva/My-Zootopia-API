@@ -1,16 +1,12 @@
 """Script to load animals data from JSON and print selected fields."""
 
 
-import requests
+import data_fetcher
 
 
 TEMPLATE_PATH = "animals_template.html"
-ANIMALS_DATA_PATH = "animals_data.json"
 TARGET_PATH = "animals.html"
 KEY_WORDS = "__REPLACE_ANIMALS_INFO__"
-API_URL = 'https://api.api-ninjas.com/v1/animals?name='
-API_KEY = "IvLPDV+GnuYbo+XJr2VjeA==Saj417C9U3BISPBz"
-RESPONSE_OK = 200
 
 
 def load_data(file_path):
@@ -60,17 +56,15 @@ def generate_html(data):
 def main():
     """Generate an HTML page with animal data using a template."""
     name = str(input("Enter a name of an animal: "))
-    response = requests.get(API_URL + name, headers={'X-Api-Key': f'{API_KEY}'})
-    if response.status_code == RESPONSE_OK:
-        if response.json():
-            animal_data = get_and_format_animal_data(response.json())
-        else:
-            animal_data = f"<h2>The animal \"{name}\" doesn't exist.</h2>"
-        template = get_html_template()
-        page = template.replace(KEY_WORDS, animal_data)
-        generate_html(page)
+    response = data_fetcher.fetch_data(name)
+
+    if response:
+        animal_data = get_and_format_animal_data(response)
     else:
-        print("Error:", response.status_code, response.text)
+        animal_data = f"<h2>The animal \"{name}\" doesn't exist.</h2>"
+    template = get_html_template()
+    page = template.replace(KEY_WORDS, animal_data)
+    generate_html(page)
 
 
 if __name__ == "__main__":
