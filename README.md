@@ -5,6 +5,9 @@ Repository used to generate a web page using a python script and data collected 
 ## Installation
 
 To install this project, simply clone the repository and install the dependencies in requirements.txt using `pip install -r requirements.txt`
+After installing all the necessary packages, please go to the https://api-ninjas.com/ and get a free key.
+In the root folder, create a new file called ".env" and inside of this file put your free key as follows:
+API_KEY='7/sfRmTW99U9mqNPilIZiQ==dmwnYbbSH5FYz9y5'
 
 ## Usage
 
