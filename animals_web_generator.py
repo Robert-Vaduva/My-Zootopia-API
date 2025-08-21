@@ -48,12 +48,18 @@ def main():
     response = data_fetcher.fetch_data_from_api(animal_name)
 
     if response == ["error"]:
-        animal_data = ("<h2>The API requires a key in order to work.</h2>"
-                       "<h2>Please check the README for instructions.</h2>")
+        if not animal_name:
+            # in case the user did not provide any input
+            animal_data = "<h2>Please provide a valid animal name to search for.</h2>"
+        else:
+            # in case the user did not provide a valid API Key
+            animal_data = ("<h2>The API requires a key in order to work.</h2>"
+                           "<h2>Please check the README for instructions.</h2>")
     else:
         if response:
             animal_data = get_and_format_animal_data(response)
         else:
+            # in case the provided animal name does not exist
             animal_data = f"<h2>The animal \"{animal_name}\" doesn't exist.</h2>"
     template = get_html_template()
     page = template.replace(KEY_WORDS, animal_data)
