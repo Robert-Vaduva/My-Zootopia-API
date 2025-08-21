@@ -9,17 +9,6 @@ TARGET_PATH = "animals.html"
 KEY_WORDS = "__REPLACE_ANIMALS_INFO__"
 
 
-def load_data(file_path):
-    """Load JSON data from a given file path."""
-    try:
-        with open(file_path, "r", encoding="utf-8") as file:
-            data = file.read()
-        return data
-    except FileNotFoundError as error:
-        print("There has been an error ...", error)
-        return None
-
-
 def get_and_format_animal_data(in_data):
     """Read animals data and print selected details for each animal."""
     output = "\n"
@@ -43,7 +32,7 @@ def get_and_format_animal_data(in_data):
 
 def get_html_template():
     """Load and return the HTML template from TEMPLATE_PATH."""
-    return load_data(TEMPLATE_PATH)
+    return data_fetcher.fetch_data_from_file(TEMPLATE_PATH)
 
 
 def generate_html(data):
@@ -54,14 +43,14 @@ def generate_html(data):
 
 
 def main():
-    """Generate an HTML page with animal data using a template."""
-    name = str(input("Enter a name of an animal: "))
-    response = data_fetcher.fetch_data(name)
+    """Generate an HTML page with animal data using a template and API information."""
+    animal_name = str(input("Enter a name of an animal: "))
+    response = data_fetcher.fetch_data_from_api(animal_name)
 
     if response:
         animal_data = get_and_format_animal_data(response)
     else:
-        animal_data = f"<h2>The animal \"{name}\" doesn't exist.</h2>"
+        animal_data = f"<h2>The animal \"{animal_name}\" doesn't exist.</h2>"
     template = get_html_template()
     page = template.replace(KEY_WORDS, animal_data)
     generate_html(page)

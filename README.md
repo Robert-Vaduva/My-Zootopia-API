@@ -1,10 +1,10 @@
 # My-Zootopia-API
 
-Repository used to generate a web page using a python script and a .json file (generated with an API)
+Repository used to generate a web page using a python script and data collected from an API.
 
 ## Installation
 
-To install this project, simply clone the repository and install the dependencies in requirements.txt using `pip`
+To install this project, simply clone the repository and install the dependencies in requirements.txt using `pip install -r requirements.txt`
 
 ## Usage
 
